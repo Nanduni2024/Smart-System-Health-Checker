@@ -89,7 +89,7 @@ pipeline {
                 echo "Waiting for app to become healthy..."
                 sh '''
                     sleep 10
-                    curl --fail http://localhost:${APP_PORT}/_stcore/health
+                    curl --fail http://host.docker.internal:${APP_PORT}/_stcore/health
                 '''
             }
         }
