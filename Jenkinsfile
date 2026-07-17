@@ -1,4 +1,4 @@
-﻿pipeline {
+pipeline {
     agent any
 
     environment {
@@ -69,8 +69,8 @@
             steps {
                 echo "Stopping and removing old container (if it exists)..."
                 sh '''
-                    docker stop  || true
-                    docker rm  || true
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
                 '''
             }
         }
@@ -79,7 +79,7 @@
             steps {
                 echo "Starting new container..."
                 sh '''
-                    docker run -d --name  -p :8501 --restart unless-stopped :latest
+                    docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:8501 --restart unless-stopped ${IMAGE_NAME}:latest
                 '''
             }
         }
@@ -89,7 +89,7 @@
                 echo "Waiting for app to become healthy..."
                 sh '''
                     sleep 10
-                    curl --fail http://localhost:/_stcore/health
+                    curl --fail http://localhost:${APP_PORT}/_stcore/health
                 '''
             }
         }
