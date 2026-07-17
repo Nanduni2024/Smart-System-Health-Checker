@@ -1,2 +1,3 @@
 streamlit
 psutil
+pytest==8.3.2
